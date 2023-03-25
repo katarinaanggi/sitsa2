@@ -1,0 +1,51 @@
+.swal2-container {
+  z-index: 20000 !important;
+}
+.choices.is-open {
+  z-index: 2000;
+}
+.choices {
+  margin-bottom: 0 !important;
+}
+
+span.no-show{
+  display: none;
+}
+span.show-ellipsis:after{
+  content: "...";
+}
+
+button, .btn{
+  border-radius: 40px;
+}
+.btn-waiting {
+  background-color: #C800FF;
+  border-color: #C800FF;
+  box-shadow: 0 0.125rem 0.25rem 0 rgba(182, 3, 236, 0.4);
+}
+
+#detailModalTitle {
+  font-size: larger;
+  color: #f37a27;
+}
+#detailModalClose {
+  transform: translate(21px, -43px);
+}
+#mbdetail {
+  padding-top: 0;
+}
+
+.iconClass{
+  position: relative;
+}
+.iconClass span{
+  position: absolute;
+  right: 0px;
+  display: block;
+  font-size: 10px;
+}
+
+.dropdown-menu {
+  max-height: 360px;
+  overflow-y: auto;
+}

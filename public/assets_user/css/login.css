@@ -1,0 +1,23 @@
+h2.text-center.text-dark.mt-5 {
+    color: palevioletred;
+}
+
+.btn-color{
+    background-color: #dcafac;
+    color: #fff;
+
+}
+
+.profile-image-pic{
+    height: 200px;
+    width: 200px;
+    object-fit: cover;
+}
+
+.cardbody-color{
+    background-color: #ebebeb;
+}
+
+a{
+    text-decoration: none;
+}
