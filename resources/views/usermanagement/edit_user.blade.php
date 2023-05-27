@@ -15,14 +15,14 @@
   </div>
   <div class="col mb-3">
     <label for="phone" class="form-label">Phone</label>
-    <input type="text" id="phone" class="form-control" value="{{ $user->phone }}" placeholder="+62xxx" />
+    <input type="text" id="phone" class="form-control" value="{{ $user->hp }}" placeholder="+62xxx" />
     <span class="text-danger errorsay" role="alert" id="phone_error"></span>  
   </div>
 </div>
 <div class="row">
   <div class="col mb-3">
     <label for="address" class="form-label">Alamat</label>
-    <input type="text" id="address" class="form-control" value="{{ $user->address }}" placeholder="Masukkan alamat" />
+    <input type="text" id="address" class="form-control" value="{{ $user->alamat }}" placeholder="Masukkan alamat" />
     <span class="text-danger errorsay" role="alert" id="address_error"></span>  
     
   </div>

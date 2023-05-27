@@ -17,7 +17,7 @@
             @endif
         </div>
         <div class="card-body">
-          <a class="btn btn-primary" onclick="create()" style="color: #fff">+Tambah User</a><br /><br />
+          {{-- <a class="btn btn-primary" onclick="create()" style="color: #fff">+Tambah User</a><br /><br /> --}}
           <div id="read"></div>
           <table class="table table-inverse table-responsive table-hover" style="width:100%" id="userTable">
             <thead class="thead-inverse">
@@ -34,7 +34,7 @@
           </table>
         </div>
     </div>
-    <!-- Add Modal -->
+    {{-- <!-- Add Modal -->
     <div class="modal fade" id="addModal" tabindex="-1" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -52,7 +52,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> --}}
     <!-- Edit Modal -->
     <div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
       <div class="modal-dialog" role="document">

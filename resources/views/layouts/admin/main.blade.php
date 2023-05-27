@@ -21,7 +21,7 @@
     
     <!-- Icons. Uncomment required icon fonts -->
     <link rel="stylesheet" href="{{ asset('assets_admin/vendor/fonts/boxicons.css') }}" />
-    <link rel="icon" type="image/x-icon" href="{{ asset('assets_admin/img/favicon/favicon.ico') }}" />
+    <link rel="icon" type="image/x-icon" href="{{ asset('/assets_user/img/icon.png') }}" />
 
     <!-- Core CSS -->
     <link rel="stylesheet" href="{{ asset('assets_admin/vendor/css/core.css') }}" class="template-customizer-core-css" />
