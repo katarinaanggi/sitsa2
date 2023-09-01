@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Admin;
 use App\Models\Order;
-
 use App\Models\Income;
 use App\Models\Expense;
 use App\Models\Category;
@@ -18,6 +17,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rules\Password;
 use ArielMejiaDev\LarapexCharts\Facades\LarapexChart;
 
 class AdminController extends Controller
@@ -68,7 +68,7 @@ class AdminController extends Controller
         //Validating inputs
         $request->validate([
             'email' => 'required|email|exists:admins,email',
-            'password' => 'required|min:5|max:30',
+            'password' => ['required','max:30',Password::min(5)->letters()->mixedCase()->numbers()],
             'g-recaptcha-response' => 'required|captcha'
         ],[
             'email.exists' => 'Email tidak terdaftar sebagai admin',
@@ -76,10 +76,11 @@ class AdminController extends Controller
             'password.required' => 'Password harus diisi',
             'password.min' => 'Password terlalu pendek, minimal :min karakter',
             'password.max' => 'Password terlalu panjang, maksimum :max karakter',
-            'g-recaptcha-response' => [
-                'required' => 'Tolong lakukan verfikasi bahwa anda bukan robot.',
-                'captcha' => 'Captcha error! Coba lag nanti.',
-            ],
+            'password.letters' => 'Password setidaknya terdiri dari 1 huruf',
+            'password.numbers' => 'Password setidaknya terdiri dari 1 angka',
+            'password.mixedCase' => 'Password setidaknya terdiri dari 1 huruf besar dan 1 huruf kecil',
+            'g-recaptcha-response.required' => 'Tolong lakukan verfikasi bahwa anda bukan robot',
+            'g-recaptcha-response.captcha' => 'Captcha error! Coba lag nanti',
         ]);
 
         $creds = $request->only('email','password');
@@ -144,10 +145,20 @@ class AdminController extends Controller
         $expensepersen = divnum(($expense - $lastexpense), $lastexpense) * 100;
         $profitpersen = divnum(($profit - $lastprofit), $profit) * 100;
 
-        //order
-        $order = Order::all();
-        $produkTerjual = Order_Detail::sum('jumlah');
-        $categories = Category::withSum('orderdetails', 'jumlah')->get();
+        //order withSum('orderdetails', 'jumlah')->get();
+        $order = Order::where('status', 'Selesai')->get();
+        $confirmed = Order::where('status', 'Selesai')->get('id');
+        $orderid = array();
+        foreach($confirmed as $item){
+            array_push($orderid, $item->id);
+        }
+        $categories = Category::withSum([
+            'orderdetails' => function ($query) use ($orderid){
+                $query->whereIn('order_id', $orderid);
+            }
+        ], 'jumlah')->get();
+        $produkTerjual = Order_Detail::whereIn('order_id', $orderid)->sum('jumlah');
+        // dd($categories);
         $skincare = (int) $categories[0]->orderdetails_sum_jumlah;
         $makeup = (int) $categories[1]->orderdetails_sum_jumlah;
         $bodycare = (int) $categories[2]->orderdetails_sum_jumlah;
@@ -223,11 +234,10 @@ class AdminController extends Controller
 
     function changePassword(Request $request, $id)
     {
-        
         $rules = [
             'oldpassword' => 'min:5|required',
-            'newpassword' => 'min:5|required',
-            'cnewpassword' => 'required|min:5|same:newpassword'
+            'newpassword' => ['required','max:30',Password::min(5)->letters()->mixedCase()->numbers()],
+            'cnewpassword' => ['required','same:newpassword','max:30',Password::min(5)->letters()->mixedCase()->numbers()]
         ];
         
         $validator = Validator::make($request->all(),$rules,[
@@ -307,8 +317,8 @@ class AdminController extends Controller
     {
         $request->validate([
             'email'=>'required|email|exists:admins,email',
-            'password'=>'required|min:5|confirmed',
-            'password_confirmation'=>'required',
+            'password'=>['required','confirmed','max:30',Password::min(5)->letters()->mixedCase()->numbers()],
+            'password_confirmation'=>'required| ',
         ]);
 
         $check_token = DB::table('password_resets')->where([
@@ -319,9 +329,13 @@ class AdminController extends Controller
         if(!$check_token){
             return back()->withInput()->with('error', 'Invalid token');
         }else{
+            $user = Admin::where('email',$request->email)->first();
+            if(Hash::check($request->password, $user->password)){
+                return back()->with('error','Password baru tidak boleh sama dengan password sebelumnya.');
+            }
 
             Admin::where('email', $request->email)->update([
-                'password'=>Hash::make($request->password)
+                'password'=> Hash::make($request->password)
             ]);
 
             DB::table('password_resets')->where([

@@ -4,10 +4,10 @@
     <label for="stocktersedia" class="form-label">Stok Tersedia : </label>
     <input type="number" id="stocktersedia" class="form-control" value="{{ $product->stok }}" />
   </div>
-  {{-- Tambah stok --}}
+  {{-- Kurang stok --}}
   <div class="row g-2 mb-3">
-    <label for="ubahstok" class="form-label">Tambah Stok : </label>
-    <input type="number" id="ubahstok" class="form-control" oninput="jumlahstock();"/>
+    <label for="ubahstok" class="form-label">Kurangi Stok : </label>
+    <input type="number" id="ubahstok" class="form-control" oninput="kurangstock();"/>
     <span class="text-danger errorsay" role="alert" id="ubahstok_error"></span>  
   </div>
   <div class="row g-2 mb-3">

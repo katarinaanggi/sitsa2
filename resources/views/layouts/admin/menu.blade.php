@@ -31,7 +31,7 @@
     <li class="menu-item {{ ($title == 'User Management') ? 'active' : '' }}">
       <a href="{{ route('admin.userManagement') }}" class="menu-link">
         <i class="menu-icon tf-icons bx bx-group"></i>
-        <div data-i18n="Kelola User">Kelola User</div>
+        <div data-i18n="Kelola Pelanggan">Kelola Pelanggan</div>
       </a>
     </li>
 

@@ -9,7 +9,7 @@
   <section class="section container-p-y container-xxl">
     <div class="card">
         <div class="card-header">
-            <h4 class="card-title">Daftar User</h4>
+            <h4 class="card-title">Daftar Pelanggan</h4>
             @if ($message = Session::get('error'))
               <div class="alert alert-danger">
                 <strong>{{ $message }}</strong>

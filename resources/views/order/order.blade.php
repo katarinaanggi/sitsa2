@@ -29,6 +29,7 @@
                 <th>Jenis</th>
                 <th>Resi</th>
                 <th>Status</th>
+                <th>Confirmed By</th>
                 <th>Details</th>
               </tr>
             </thead>
@@ -81,7 +82,7 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="addResiModalTitle">Modal title</h5>
+            <h5 class="modal-title" id="addResiModalTitle">Tambah Resi</h5>
             <button
               type="button"
               class="btn-close"
@@ -112,14 +113,19 @@
               return "<span>Order #"+data+"</span>"
             }
           },
-          { data: 'user_id', name: 'user_id' },
+          { data: 'user.nama', name: 'user.nama' },
           { data: 'jumlah', name: 'jumlah' },
           { data: 'total', name: 'total',
             render: DataTable.render.number( ',', '.', 2, 'Rp ' )
           },
           { data: 'bukti_transfer_path', name: 'bukti_transfer_path', 
             render: function( data, type, full, meta ) {
-              return "<img src=\"" + data + "\" height=\"50\"/>";
+              if(data != null){
+                return "<img src=\"" + data + "\" height=\"50\"/>";
+              }
+              else {
+                return "Menunggu pembayaran";
+              }
             }
           },
           { data: 'jenis', name: 'jenis' },
@@ -158,6 +164,7 @@
               }
             },
           },
+          { data: 'admin.nama', name: 'admin.nama', defaultContent: "None" },
           { data: 'details', name: 'details' }
         ],
         columnDefs: [

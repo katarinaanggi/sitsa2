@@ -31,7 +31,7 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function showbycategory(Category  $category)
+    public function showbycategory(Category $category)
     {
         $products = Product::where('category_id', $category->id)->get();
         return view('category.showbycategory',[
@@ -185,19 +185,29 @@ class CategoryController extends Controller
                         $fileName = time().'_'.$file->getClientOriginalName();
                     }
                     $filePath = '/uploads/' . $file->storeAs('categories', $fileName, 'public');
+
+                    $current_timestamp = Carbon::now()->toDateTimeString();
+                    DB::table('categories')->where('id', $category->id)->update([
+                        'nama' => $request->name,
+                        'gambar' => $fileName,
+                        'pic_path' => $filePath,
+                        'updated_at' => $current_timestamp
+                    ]);
+                    return response()->json([
+                        'success' => true,
+                        'message' => 'Data Berhasil Diubah!!'
+                    ]);
+                } else{
+                    $current_timestamp = Carbon::now()->toDateTimeString();
+                    DB::table('categories')->where('id', $category->id)->update([
+                        'nama' => $request->name,
+                        'updated_at' => $current_timestamp
+                    ]);
+                    return response()->json([
+                        'success' => true,
+                        'message' => 'Data Berhasil Diubah!!'
+                    ]);
                 }
-                
-                $current_timestamp = Carbon::now()->toDateTimeString();
-                DB::table('categories')->where('id', $category->id)->update([
-                    'nama' => $request->name,
-                    'gambar' => $fileName,
-                    'pic_path' => $filePath,
-                    'updated_at' => $current_timestamp
-                ]);
-                return response()->json([
-                    'success' => true,
-                    'message' => 'Data Berhasil Diubah!!'
-                ]);
             }
 			catch(Exception $e){
                 return response()->json([
@@ -216,9 +226,14 @@ class CategoryController extends Controller
      */
     public function destroy($id, $pic)
     {
-        Storage::disk('public')->delete('categories/'.$pic);
-
+        $category = Category::find($id);
+        $products = $category->products()->with('category')->where('category_id',$id)->get();
+        // dd($products);
+        foreach($products as $product){
+            $product->update(['category_id' => 5]);
+        };
         Category::destroy($id);
+        Storage::disk('public')->delete('categories/'.$pic);
         return response()->json([
             'success' => true,
             'message' => 'Data Berhasil Dihapus!.',

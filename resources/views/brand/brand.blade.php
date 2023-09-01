@@ -301,7 +301,7 @@
         //show confirm message
         Swal.fire({
           title: 'Apakah anda yakin?',
-          text: "Data akan dihapus secara permanen!",
+          text: "Data merek dan produk yang berkaitan dengan merek akan dihapus secara permanen!",
           icon: 'warning',
           showCancelButton: true,
           confirmButtonColor: '#3085d6',
@@ -326,6 +326,15 @@
                   icon: 'success',
                   text: `${data.message}`,
                   title: 'Dihapus!',
+                  showConfirmButton: false,
+                  timer: 3000
+                });
+              },
+              error: function(data){
+                Swal.fire({
+                  icon: 'error',
+                  text: 'Data tidak dapat dihapus!',
+                  title: 'Gagal!',
                   showConfirmButton: false,
                   timer: 3000
                 });

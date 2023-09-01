@@ -185,19 +185,29 @@ class BrandController extends Controller
                         $fileName = time().'_'.$file->getClientOriginalName();
                     }
                     $filePath = '/uploads/' . $file->storeAs('brands', $fileName, 'public');
+                    $current_timestamp = Carbon::now()->toDateTimeString();
+                    DB::table('brands')->where('id', $brand->id)->update([
+                        'nama' => $request->name,
+                        'gambar' => $fileName,
+                        'pic_path' => $filePath,
+                        'updated_at' => $current_timestamp
+                    ]);
+                    return response()->json([
+                        'success' => true,
+                        'message' => 'Data Berhasil Diubah!!'
+                    ]);
+                } else {
+                    $current_timestamp = Carbon::now()->toDateTimeString();
+                    DB::table('brands')->where('id', $brand->id)->update([
+                        'nama' => $request->name,
+                        'updated_at' => $current_timestamp
+                    ]);
+                    
+                    return response()->json([
+                        'success' => true,
+                        'message' => 'Data Berhasil Diubah!!'
+                    ]);
                 }
-                
-                $current_timestamp = Carbon::now()->toDateTimeString();
-                DB::table('brands')->where('id', $brand->id)->update([
-                    'nama' => $request->name,
-                    'gambar' => $fileName,
-                    'pic_path' => $filePath,
-                    'updated_at' => $current_timestamp
-                ]);
-                return response()->json([
-                    'success' => true,
-                    'message' => 'Data Berhasil Diubah!!'
-                ]);
             }
 			catch(Exception $e){
 			    return response()->json([
@@ -216,12 +226,17 @@ class BrandController extends Controller
      */
     public function destroy($id, $pic)
     {
-        Storage::disk('public')->delete('brands/'.$pic);
-
-        Brand::destroy($id);
-        return response()->json([
-            'success' => true,
-            'message' => 'Data Berhasil Dihapus!.',
-        ]);
+        try {
+            Brand::destroy($id);
+            Storage::disk('public')->delete('brands/'.$pic);
+            return response()->json([
+                'success' => true,
+                'message' => 'Data Berhasil Dihapus!',
+            ]); 
+        } catch(Exception $e) {
+            return response()->json([
+                'error' => true
+            ]); 
+        }
     }
 }

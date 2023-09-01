@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Carbon\Carbon;
+use App\Models\Admin;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Income extends Model
 {
@@ -25,6 +27,15 @@ class Income extends Model
         'jumlah' => 'integer',
         'total' => 'integer',
     ];
+
+    /**
+     * Get the admin that owns the order
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function admin(){
+        return $this->belongsTo(Admin::class);
+    }
 
     // protected $dates = [
     //     'date'

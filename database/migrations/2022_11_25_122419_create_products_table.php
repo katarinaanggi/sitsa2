@@ -17,14 +17,15 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('category_id');
             $table->unsignedBigInteger('brand_id');
-            $table->string('nama', 100);
-            $table->string('gambar', 255);
-            $table->string('pic_path', 255)->nullable();
+            $table->string('nama', 90);
+            $table->string('gambar', 50);
+            $table->string('pic_path', 80)->nullable();
             $table->integer('harga');
             $table->integer('stok');
+            $table->date('expired_date');
             $table->text('deskripsi')->nullable();
             $table->foreign('category_id')->references('id')->on('categories');
-            $table->foreign('brand_id')->references('id')->on('brands');
+            $table->foreign('brand_id')->references('id')->on('brands')->onDelete('cascade');
             $table->timestamps();
         });
     }

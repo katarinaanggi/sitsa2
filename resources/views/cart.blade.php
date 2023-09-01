@@ -2,7 +2,7 @@
 
 @section('container')
     <!-- Breadcrumb Section Begin -->
-    <section class="breadcrumb-section set-bg" data-setbg="/assets_user/img/breadcrumb.jpg">
+    <section class="breadcrumb-section set-bg" data-setbg="/assets_user/img/breadcrumb.png">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
@@ -40,9 +40,9 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($details as $detail)    
-                                        @php
-                                            $subtotal = $detail->product->harga*$detail->jumlah     
-                                        @endphp
+                                            @php
+                                                $subtotal = $detail->product->harga*$detail->jumlah     
+                                            @endphp
                                             <tr>
                                                 <td class="shoping__cart__item">
                                                     <a href="{{ route('product_detail',$detail->product_id) }}"><img src="{{ $detail->product->pic_path }}" alt="" width="100">
@@ -65,11 +65,29 @@
                                                     Rp{{ number_format($subtotal,0, ',' , '.') }}
                                                 </td>
                                                 <td class="shoping__cart__item__close">
-                                                    <a href="{{ route('delete_cart',$detail->id) }}">
+                                                    <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $detail->id }}">
                                                         <span class="icon_close"></span>
                                                     </a>
                                                 </td>
-                                            </tr> 
+                                            </tr>
+                                            <!-- Delete Product Modal -->
+                                            <div class="modal fade" id="deleteModal{{ $detail->id }}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                        <h1 class="modal-title fs-5" id="deleteModalLabel"><b> Hapus Produk</b></h1>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                        Anda yakin ingin menghapus produk ini dari keranjang?
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                        <a type="button" class="primary-btn" style="color:white; background: #bababa" data-bs-dismiss="modal">Tidak</a>
+                                                        <a href="{{ route('delete_cart',$detail->id) }}" type="button" class="primary-btn">Ya</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>  
                                         @endforeach
                                     </tbody>
                                 </table>
@@ -211,7 +229,7 @@
         function updateTotal(id, jumlah, harga){
             var subtotal = toRupiah(jumlah*harga);
             $("#subtotal"+id).text(subtotal);
-            if (jumlah == 0) {
+            if (jumlah == '0') {
                 $.ajax({
                     type: "get",
                     url: "{{ route('delete_cart', '') }}/" + id,

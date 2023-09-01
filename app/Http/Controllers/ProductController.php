@@ -211,24 +211,39 @@ class ProductController extends Controller
                         $fileName = time().'_'.$file->getClientOriginalName();
                     }
                     $filePath = '/uploads/' . $file->storeAs('products', $fileName, 'public');
+
+                    $current_timestamp = Carbon::now()->toDateTimeString();
+                    DB::table('products')->where('id', $product->id)->update([
+                        'nama'          => $request->name,
+                        'harga'         => $request->price,
+                        'stok'          => $request->stock,
+                        'deskripsi'     => $request->desc,
+                        'category_id'   => $request->category,
+                        'brand_id'      => $request->brand,
+                        'gambar'        => $fileName,
+                        'pic_path'      => $filePath,
+                        'updated_at'    => $current_timestamp
+                    ]);
+                    return response()->json([
+                        'success' => true,
+                        'message' => 'Data Berhasil Diubah!!'
+                    ]);
+                } else {                
+                    $current_timestamp = Carbon::now()->toDateTimeString();
+                    DB::table('products')->where('id', $product->id)->update([
+                        'nama'          => $request->name,
+                        'harga'         => $request->price,
+                        'stok'          => $request->stock,
+                        'deskripsi'     => $request->desc,
+                        'category_id'   => $request->category,
+                        'brand_id'      => $request->brand,
+                        'updated_at'    => $current_timestamp
+                    ]);
+                    return response()->json([
+                        'success' => true,
+                        'message' => 'Data Berhasil Diubah!!'
+                    ]);
                 }
-                
-                $current_timestamp = Carbon::now()->toDateTimeString();
-                DB::table('products')->where('id', $product->id)->update([
-                    'nama'          => $request->name,
-                    'harga'         => $request->price,
-                    'stok'          => $request->stock,
-                    'deskripsi'     => $request->desc,
-                    'category_id'   => $request->category,
-                    'brand_id'      => $request->brand,
-                    'gambar'        => $fileName,
-                    'pic_path'      => $filePath,
-                    'updated_at'    => $current_timestamp
-                ]);
-                return response()->json([
-                    'success' => true,
-                    'message' => 'Data Berhasil Diubah!!'
-                ]);
             }
 			catch(Exception $e){
                 return response()->json([
@@ -248,13 +263,18 @@ class ProductController extends Controller
      */
     public function destroy($id, $pic)
     {
-        Storage::disk('public')->delete('products/'.$pic);
-
-        Product::destroy($id);
-        return response()->json([
-            'success' => true,
-            'message' => 'Data Berhasil Dihapus!.',
-        ]); 
+        try {
+            Product::destroy($id);
+            Storage::disk('public')->delete('products/'.$pic);
+            return response()->json([
+                'success' => true,
+                'message' => 'Data Berhasil Dihapus!',
+            ]); 
+        } catch(Exception $e) {
+            return response()->json([
+                'error' => true
+            ]); 
+        }
     }
 
     /**
@@ -271,6 +291,19 @@ class ProductController extends Controller
     }
 
     /**
+     * Show the form for creating a new resource's stock.
+     *
+     * @param  \App\Models\Product  $product
+     * @return \Illuminate\Http\Response
+     */
+    public function substractStock(Product  $product)
+    {
+        return view('product.substract_stock',[
+            'product' => $product
+        ]);
+    }
+
+    /**
      * Store a newly created resource's stock in storage.
      *
      * @param  int  $id \App\Models\Product  $product
@@ -280,7 +313,7 @@ class ProductController extends Controller
     public function updateStock(Request $request, Product $product)
     {
         $rules = [
-            'tambahstok'     => 'required|numeric',
+            'ubahstok'     => 'required|numeric',
         ];
         
         $messages = [
@@ -296,7 +329,7 @@ class ProductController extends Controller
 		else{
             try{
                 $current_timestamp = Carbon::now()->toDateTimeString();
-                $jumlah = $product->stok + $request->tambahstok;
+                $jumlah = $product->stok + $request->ubahstok;
                 DB::table('products')->where('id', $product->id)->update([
                     'stok'         => $jumlah,
                     'updated_at'    => $current_timestamp
@@ -304,13 +337,13 @@ class ProductController extends Controller
                 
                 return response()->json([
                     'success' => true,
-                    'message' => 'Data Berhasil Ditambahkan!'
+                    'message' => 'Data Berhasil Diubah!'
                 ]);
             }
 			catch(Exception $e){
                 return response()->json([
                     'error' => true,
-                    'message' => 'Data belum berhasil ditambahkan!'
+                    'message' => 'Data belum berhasil diubah!'
                 ]);
 			}
 		}

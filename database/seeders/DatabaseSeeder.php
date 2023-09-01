@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Carbon\Carbon;
 use App\Models\Cart;
 use App\Models\User;
 use App\Models\Admin;
@@ -23,8 +24,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        Income::factory(100)->create();
-        Expense::factory(100)->create();
+        // Income::factory(100)->create();
+        // Expense::factory(100)->create();
         // \App\Models\User::factory(10)->create();
 
         Category::create([
@@ -92,6 +93,7 @@ class DatabaseSeeder extends Seeder
             "pic_path" => "/uploads/products/product-1.jpg",
             "harga" => 139000,
             "stok" => 100,
+            "expired_date" => Carbon::createFromDate(2025,12,31)->toDateTimeString(),
             "deskripsi" => "Your Skin Bae Alpha Arbutin 3% + Grapeseed Serum	
 
             Salah satu best seller serum Avoskin dari Your Skin Bae series yang memadukan active ingredient Alpha Arbutin 3% dan ekstrak natural Grapeseed untuk mencerahkan kulit, memudarkan noda bekas jerawat kehitaman (PIH), dan mengurangi tampilan pori-pori. Alpha Arbutin merupakan brightening agent yang paling efektif dan aman untuk kulit. Sedangkan Grapeseed mengandung antioksidan untuk menjaga sel kulit tetap kencang dan sehat.
@@ -121,6 +123,7 @@ class DatabaseSeeder extends Seeder
             "pic_path" => "/uploads/products/product-2.jpeg",
             "harga" => 169000,
             "stok" => 100,
+            "expired_date" => Carbon::createFromDate(2025,12,31)->toDateTimeString(),
             "deskripsi" => "The Great Shield Sunscreen SPF 50 PA++++ NEW FORMULA (30 ml)	
 
             Sunscreen dengan SPF 50 PA++++ New Formula merupakan waterbased sunscreen yang bertekstur ringan dengan tampilan hasil akhir yang matte dan minimal whitecast. Chemical sunscreen ini hadir dengan kandungan utama yaitu Allantoin, Chamomile Flower Extract, Sodium Hyaluronate (HA), 3-O-Ethyl Ascorbic Acid, dan Silica for sebum/oil reducer yang berfungsi untuk melindungi kulit dari paparan sinar UVA dan UVB, membantu menenangkan kulit, membantu mencegah tampilan penuaan dini, mengurangi tampilan pori-pori, merawat elastisitas dan kesehatan kulit. 
@@ -154,6 +157,7 @@ class DatabaseSeeder extends Seeder
             "pic_path" => "/uploads/products/product-3.jpg",
             "harga" => 195000,
             "stok" => 100,
+            "expired_date" => Carbon::createFromDate(2025,12,31)->toDateTimeString(),
             "deskripsi" => "The Goddess Eyeshadow Palette captures the alluring everyday colors with 9 highly pigmented shadows in four finishes."
         ]);
         Product::create([
@@ -164,6 +168,7 @@ class DatabaseSeeder extends Seeder
             "pic_path" => "/uploads/products/product-4.jpeg",
             "harga" => 295000,
             "stok" => 100,
+            "expired_date" => Carbon::createFromDate(2025,12,31)->toDateTimeString(),
             "deskripsi" => "Wonder Woman Believe in Wonder Cheek Palette
 
             Wonder Woman Believe in Wonder: Champion Cheek Palette ini merupakan face palette yang terdiri dari Bronzer, Blush dan Highlighter.
@@ -184,6 +189,7 @@ class DatabaseSeeder extends Seeder
             "pic_path" => "/uploads/products/product-5.png",
             "harga" => 170000,
             "stok" => 100,
+            "expired_date" => Carbon::createFromDate(2025,12,31)->toDateTimeString(),
             "deskripsi" => "Extraordinary Oil adalah serum perawatan rambut intensif dari LOreal Paris. Rambut akan secara intensif ternutrisi, dan terlindungi, dan memberikan hasil rambut yang halus, lembut, tampak berkilau, tanpa memberikan hasil akhir yang lepek secara seketika.
             Rambut tampak sempurna, seketika!
             Menggunakan formula yang diperkaya dengan 6 ekstrak bunga langka: Lotus, Chamomile, Rose, Tiare, Linseed, Soybean. Penggunaan multifungsi: Gunakan 3 hingga 4 tetes sebelum keramas untuk menutrisi secara intensif, atau sebelum mengeringkan rambut menggunakan alat pengering rambut untuk melindungi rambut, atau sebagai sentuhan akhir untuk meningkatkan kilau dan intensitas warna rambut
@@ -212,6 +218,7 @@ class DatabaseSeeder extends Seeder
             "pic_path" => "/uploads/products/product-6.jpg",
             "harga" => 198791,
             "stok" => 100,
+            "expired_date" => Carbon::createFromDate(2025,12,31)->toDateTimeString(),
             "deskripsi" => "L'Oreal Professionnel Hair Spa Deep Nourishing Shampoo adalah shampo untuk perawatan rambut kering & rusak.
 
             Hasil: Rambut terlihat sehat & berkilau alami.
@@ -236,6 +243,7 @@ class DatabaseSeeder extends Seeder
             "pic_path" => "/uploads/products/product-7.jpg",
             "harga" => 129900,
             "stok" => 100,
+            "expired_date" => Carbon::createFromDate(2025,12,31)->toDateTimeString(),
             "deskripsi" => "<p>NEXT LEVEL TINT! SUPERSTAY VINYL INK DARI MAYBELLINE NEW YORK
             16 Jam pigmented, lembap dengan aloe vera, tidak transfer!
             Tint kini dalam teknologi Superstay
@@ -265,6 +273,7 @@ class DatabaseSeeder extends Seeder
             "pic_path" => "/uploads/products/product-8.jpg",
             "harga" => 165900,
             "stok" => 100,
+            "expired_date" => Carbon::createFromDate(2025,12,31)->toDateTimeString(),
             "deskripsi" => "Maybelline Matte Foundation Fit Me Pump Matte Pore
             <p>
             Keunggulan:
@@ -323,6 +332,7 @@ class DatabaseSeeder extends Seeder
             "pic_path" => "/uploads/products/product-9.jpeg",
             "harga" => 155000,
             "stok" => 100,
+            "expired_date" => Carbon::createFromDate(2025,12,31)->toDateTimeString(),
             "deskripsi" => "Salmon DNA + Marine Collagen Elixir 
             <p>
             Skin Booster Elixir yang diformulasikan dengan 62% Deep Sea Water, Pseudoalteromonas Ferment Extract, Hydrolyzed Marine Collagen dan Pearl yang mampu menghidrasi & menyeimbangkan produksi minyak serta DNA Salmon yang berperan untuk memperkuat skin barrier & membantu mencegah tanda penuaan dini.
@@ -372,6 +382,7 @@ class DatabaseSeeder extends Seeder
             "pic_path" => "/uploads/products/product-10.jpeg",
             "harga" => 75000,
             "stok" => 100,
+            "expired_date" => Carbon::createFromDate(2025,12,31)->toDateTimeString(),
             "deskripsi" => "Bakuchiol R-Cover Firming Body Crème
 
             <p>3-in-1 Body Creme untuk membantu MENYAMARKAN STRETCH MARK dalam 28* hari! Diperkaya dengan kandungan Bakuchiol, Chlorella Extract, & cross-linked Hyaluronic Acid yang menjaga kekencangan sekaligus menghidrasi kulit agar tetap lembab & elastis. Nyaman digunakan sepanjang hari dengan tekstur ringan, mudah menyerap, & tidak lengket.</p>
@@ -408,6 +419,7 @@ class DatabaseSeeder extends Seeder
             "pic_path" => "/uploads/products/product-11.jpg",
             "harga" => 129000,
             "stok" => 100,
+            "expired_date" => Carbon::createFromDate(2025,12,31)->toDateTimeString(),
             "deskripsi" => "<p>Pembersih tubuh bertekstur gel dengan aroma moringa yang lembut dan menyegarkan. Diperkaya dengan Community Trade honey dari Ethiopia dan moringa seed oil dari Rwanda.</p>	
 
             <p>How to use:
@@ -423,6 +435,7 @@ class DatabaseSeeder extends Seeder
             "pic_path" => "/uploads/products/product-12.jpg",
             "harga" => 189000,
             "stok" => 100,
+            "expired_date" => Carbon::createFromDate(2025,12,31)->toDateTimeString(),
             "deskripsi" => "<p>Pengharum tubuh dalam format body mist dengan aroma strawberry yang manis dan menyegarkan. Terbuat dari denatured alcohol dan 97% natural origin ingredients. Cocok untuk digunakan sehari-hari.</p>
 
             <p>How to use:
@@ -447,9 +460,9 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Admin::create([
-            "nama" => "admin",
+            "nama" => "admin 1",
             "email" => "admin@gmail.com",
-            "password" => bcrypt('admin')
+            "password" => bcrypt('Admin123')
         ]);
 
         Order::create([
@@ -486,18 +499,21 @@ class DatabaseSeeder extends Seeder
             "order_id" => 1,
             "product_id" => 1,
             "jumlah" => 1,
+            "harga" => 139000,
         ]);
 
         Order_Detail::create([
             "order_id" => 2,
             "product_id" => 2,
             "jumlah" => 2,
+            "harga" => 169000,
         ]);
 
         Order_Detail::create([
             "order_id" => 3,
             "product_id" => 3,
             "jumlah" => 3,
+            "harga" => 195000,
         ]);
 
         Cart::create([
@@ -505,6 +521,47 @@ class DatabaseSeeder extends Seeder
         ]);
         Cart::create([
             "user_id" => 2
+        ]);
+
+        Expense::create([
+            "tanggal" => Carbon::createFromDate(2023,07,01)->toDateTimeString(),
+            "nama" => "Retribusi",
+            "jumlah" => 1,
+            "total" => 8000,
+            "deskripsi" => "Pajak retribusi harian sesuai luas tanah.",
+            "admin_id" => 1,
+        ]);
+        Expense::create([
+            "tanggal" => Carbon::createFromDate(2023,07,02)->toDateTimeString(),
+            "nama" => "Retribusi",
+            "jumlah" => 1,
+            "total" => 8000,
+            "deskripsi" => "Pajak retribusi harian sesuai luas tanah.",
+            "admin_id" => 1,
+        ]);
+        Expense::create([
+            "tanggal" => Carbon::createFromDate(2023,07,03)->toDateTimeString(),
+            "nama" => "Retribusi",
+            "jumlah" => 1,
+            "total" => 8000,
+            "deskripsi" => "Pajak retribusi harian sesuai luas tanah.",
+            "admin_id" => 1,
+        ]);
+        Expense::create([
+            "tanggal" => Carbon::createFromDate(2023,07,04)->toDateTimeString(),
+            "nama" => "Retribusi",
+            "jumlah" => 1,
+            "total" => 8000,
+            "deskripsi" => "Pajak retribusi harian sesuai luas tanah.",
+            "admin_id" => 1,
+        ]);
+        Expense::create([
+            "tanggal" => Carbon::createFromDate(2023,07,05)->toDateTimeString(),
+            "nama" => "Retribusi",
+            "jumlah" => 1,
+            "total" => 8000,
+            "deskripsi" => "Pajak retribusi harian sesuai luas tanah.",
+            "admin_id" => 1,
         ]);
     }
 }

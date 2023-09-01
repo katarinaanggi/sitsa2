@@ -116,6 +116,7 @@ Route::prefix('admin')->name('admin.')->group(function(){
             ->make(true);
         })->name('data_product');
         Route::get('/add-stock/{product:id}', [ProductController::class,'addStock'])->name('add_stock');
+        Route::get('/substract-stock/{product:id}', [ProductController::class,'substractStock'])->name('substract_stock');
         Route::post('/update-stock/{product:id}', [ProductController::class, 'updateStock'])->name('update_stock');
         
         //Income
@@ -126,7 +127,7 @@ Route::prefix('admin')->name('admin.')->group(function(){
         Route::post('/update-income/{id}', [IncomeController::class, 'update'])->name('update_income');
         Route::get('/delete-income/{id}', [IncomeController::class, 'destroy'])->name('delete_income');
         Route::get('/data-income', function() {
-            return DataTables::of(Income::query())
+            return DataTables::of(Income::with('admin')->get())
             ->addColumn('action', 'income.action')
             ->make(true);
         })->name('data_income');
@@ -136,11 +137,11 @@ Route::prefix('admin')->name('admin.')->group(function(){
         Route::get('/expense',[ExpenseController::class, 'index'])->name('expense');
         Route::get('/add-expense', [ExpenseController::class,'create'])->name('add_expense');
         Route::post('/store-expense', [ExpenseController::class, 'store'])->name('store_expense');
-        Route::get('/edit-expense/{id}', [ExpenseController::class, 'edit'])->name('edit_expense');
+        Route::get('/edit-expense/{expense:id}', [ExpenseController::class, 'edit'])->name('edit_expense');
         Route::post('/update-expense/{id}', [ExpenseController::class, 'update'])->name('update_expense');
         Route::get('/delete-expense/{id}', [ExpenseController::class, 'destroy'])->name('delete_expense');
         Route::get('/data-expense', function() {
-            return DataTables::of(Expense::query())
+            return DataTables::of(Expense::with('admin')->get())
             ->addColumn('action', 'expense.action')
             ->make(true);
         })->name('data_expense');
@@ -155,8 +156,7 @@ Route::prefix('admin')->name('admin.')->group(function(){
         Route::post('/update-resi/{id}', [OrderController::class, 'updateResi'])->name('update_resi');
         Route::get('/order-details/{order:id}', [OrderController::class,'show'])->name('order_details');
         Route::get('/data-order', function() {
-            return DataTables::of(Order::query())
-            // ->addColumn('action', 'order.action')
+            return DataTables::of(Order::with('user', 'admin')->get())
             ->addColumn('details', function ($item) {
                 return '<a 
                 class="button detail text-primary" 
@@ -171,20 +171,6 @@ Route::prefix('admin')->name('admin.')->group(function(){
         Route::get('/complete-order/{order:id}', [OrderController::class, 'complete'])->name('complete_order');
     });
 });
-
-// Route::prefix('user')->name('user.')->group(function(){
-    // // Product
-    // Route::get('/', [ProductController::class, 'index'])->name('shop');
-    // Route::get('/shop', [ProductController::class, 'shop'])->name('shop_detail');
-    // Route::get('/shop/products/{product:id}', [ProductController::class, 'show'])->name('product_detail');
-    
-    // // Brand
-    // Route::get('/shop/brands/{brand:id}', [BrandController::class, 'show'])->name('brand_detail');
-    
-    // // Category
-    // Route::get('/shop/categories/{category:id}', [CategoryController::class, 'show'])->name('category_detail');
-    
-// });
 
 // Product
 Route::get('/shop', [ProductController::class, 'shop'])->name('shop');

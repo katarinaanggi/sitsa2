@@ -29,6 +29,7 @@
                 <th>Merek</th>
                 <th>Stok</th>
                 <th>Harga (IDR)</th>
+                <th>Expired Date</th>
                 <th>Deskripsi</th>
                 <th>Action</th>
               </tr>
@@ -80,7 +81,7 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="addStockModalTitle">Modal title</h5>
+            <h5 class="modal-title" id="addStockModalTitle">Tambah Stok</h5>
             <button
               type="button"
               class="btn-close"
@@ -90,6 +91,25 @@
           </div>
           <div class="modal-body">
             <div id="stockpage"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- substract Stock Modal -->
+    <div class="modal fade" id="substractStockModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="substractStockModalTitle">Kurang Stok</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div id="minstok"></div>
           </div>
         </div>
       </div>
@@ -118,12 +138,13 @@
           { data: 'brand.nama', name: 'brand.nama' },
           { data: 'stok', name: 'stok',
             render: function(data, type, row){
-              return data+"<a class='button' onclick='addStock("+row.id+")'><i class='bx bxs-plus-circle'></i></a>";
+              return "<a class='button' onclick='substractStock("+row.id+")'><i class='bx bxs-minus-circle'></i></a>"+data+"<a class='button' onclick='addStock("+row.id+")'><i class='bx bxs-plus-circle'></i></a>";
             } 
           },
           { data: 'harga', name: 'harga',
             render: DataTable.render.number( ',', '.', 2, 'Rp ' )
           },
+          { data: 'expired_date', name: 'expired_date' },
           { data: 'deskripsi', name: 'deskripsi',
             render: function(data, type, row) {
               if (type === 'display' && data != null) {
@@ -379,6 +400,15 @@
                 showConfirmButton: false,
                 timer: 3000
               });
+            },
+            error: function(data){
+              Swal.fire({
+                icon: 'error',
+                text: 'Data tidak dapat dihapus!',
+                title: 'Gagal!',
+                showConfirmButton: false,
+                timer: 3000
+              });
             }
           });
         }
@@ -392,11 +422,25 @@
         $("#addStockModal").modal('show');
       });
     }  
+
+    function substractStock(id) {
+      $.get("{{ route('admin.substract_stock', '')}}"+"/"+id, {}, function(data,status) {
+        $("#substractStockModalTitle").html('Kurang stok product');
+        $("#minstok").html(data);
+        $("#substractStockModal").modal('show');
+      });
+    }  
     
     function jumlahstock() {
       let a = parseFloat($("#stocktersedia").val()); 
-      let b = parseFloat($("#tambahstok").val()); 
+      let b = parseFloat($("#ubahstok").val()); 
       $("#jumlah").val(a + b);
+    }
+
+    function kurangstock() {
+      let a = parseFloat($("#stocktersedia").val()); 
+      let b = parseFloat($("#ubahstok").val()); 
+      $("#jumlah").val(a - b);
     }
 
     function updateStock(id) {
@@ -412,10 +456,10 @@
       }).then((result) => {
         if (result.isConfirmed) {
           //define variable
-          let tambahstok = $("#tambahstok").val();
+          let ubahstok = $("#ubahstok").val();
     
           var fd = new FormData();
-          fd.append('tambahstok', tambahstok);          
+          fd.append('ubahstok', ubahstok);          
       
           //ajax
           $.ajax({

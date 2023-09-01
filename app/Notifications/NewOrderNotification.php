@@ -14,6 +14,7 @@ class NewOrderNotification extends Notification implements ShouldQueue
 
     protected $username;
     protected $status;
+    protected $order_id;
 
     /**
      * Create a new notification instance.
@@ -24,6 +25,7 @@ class NewOrderNotification extends Notification implements ShouldQueue
     {
         $this->username = $order->user->nama;
         $this->status = $order->status;
+        $this->order_id = $order->id;
     }
 
     /**
@@ -48,6 +50,7 @@ class NewOrderNotification extends Notification implements ShouldQueue
         return [
             'nama' => $this->username,
             'status' => $this->status,
+            'order_id' => $this->order_id
         ];
     }
 }

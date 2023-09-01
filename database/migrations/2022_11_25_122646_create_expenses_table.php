@@ -20,6 +20,8 @@ class CreateExpensesTable extends Migration
             $table->integer('jumlah');
             $table->integer('total');
             $table->text('deskripsi');
+            $table->unsignedBigInteger('admin_id')->nullable();
+            $table->foreign('admin_id')->references('id')->on('admins');
             $table->timestamps();
         });
     }

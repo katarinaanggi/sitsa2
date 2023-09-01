@@ -74,6 +74,7 @@ class IncomeController extends Controller
                 $data['jumlah'] = $request->amount;
                 $data['total'] = $request->total;
                 $data['deskripsi'] = $request->desc;
+                $data['admin_id'] = auth()->guard('admin')->user()->id;
                 $data['created_at'] = $current_timestamp;
                 $data['updated_at'] = $current_timestamp;
                 

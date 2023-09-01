@@ -2,8 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\User;
+use App\Models\Admin;
+use App\Models\Order_Detail;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Order extends Model
 {
@@ -45,5 +48,14 @@ class Order extends Model
     public function order_details()
     {
         return $this->hasMany(Order_Detail::class);
+    }
+
+    /**
+     * Get the admin that owns the order
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function admin(){
+        return $this->belongsTo(Admin::class);
     }
 }

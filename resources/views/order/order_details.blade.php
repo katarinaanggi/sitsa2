@@ -21,7 +21,7 @@
           <p>{{ $order_detail->jumlah }}</p>
         </div>
         <div class="col-md-4 col-lg-3">
-          <p style="text-align:right;">Rp {{ number_format($order_detail->product->harga * $order_detail->jumlah,0, ',' , '.') }}</p>
+          <p style="text-align:right;">Rp {{ number_format($order_detail->harga * $order_detail->jumlah,0, ',' , '.') }}</p>
         </div>
       </div>        
     @endforeach

@@ -58,6 +58,7 @@
                 <th>Jumlah</th>
                 <th>Total</th>
                 <th>Deskripsi</th>
+                <th>Direkap oleh</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -146,6 +147,7 @@
             render: DataTable.render.number( ',', '.', 2, 'Rp ' )
         },
         { data: 'deskripsi', name: 'deskripsi' },
+        { data: 'admin.nama', name: 'admin.nama', defaultContent: "None" },
         { data: 'action', name: 'action' }
       ],
       columnDefs: [

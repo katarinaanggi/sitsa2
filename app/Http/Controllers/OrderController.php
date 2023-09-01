@@ -269,7 +269,8 @@ class OrderController extends Controller
             $status = "Pembayaran terkonfirmasi";
         }
         DB::table('orders')->where('id', $order->id)->update([
-            'status'         => $status,
+            'status'        => $status,
+            'admin_id'      => auth()->guard('admin')->user()->id,
             'updated_at'    => $current_timestamp
         ]);
         
@@ -283,7 +284,8 @@ class OrderController extends Controller
             'tanggal' => $current_date,
             'jumlah' => $order->jumlah,
             'total' => $order->total,
-            'deskripsi' => 'Order #'.$order->id.': '.$desc
+            'deskripsi' => 'Order #'.$order->id.': '.$desc,
+            'admin_id'  => auth()->guard('admin')->user()->id
         ]);
         
         return response()->json([

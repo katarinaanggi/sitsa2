@@ -1,10 +1,10 @@
 <div style="white-space: nowrap;">
-  <a 
+  {{-- <a 
     class="button edit" 
     onclick="event.preventDefault();edit({{$model->id}})" 
     data-bs-toggle="tooltip" 
     title="edit income" >
-    <i class="bi bi-pencil-square text-warning"></i></a>&nbsp;
+    <i class="bi bi-pencil-square text-warning"></i></a>&nbsp; --}}
     
   <a 
   class="button delete-confirm" 

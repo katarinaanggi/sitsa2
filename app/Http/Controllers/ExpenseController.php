@@ -71,6 +71,7 @@ class ExpenseController extends Controller
                 $data['jumlah'] = $request->amount;
                 $data['total'] = $request->total;
                 $data['deskripsi'] = $request->desc;
+                $data['admin_id'] = auth()->guard('admin')->user()->id;
                 $data['created_at'] = $current_timestamp;
                 $data['updated_at'] = $current_timestamp;
                 
@@ -103,7 +104,7 @@ class ExpenseController extends Controller
      * @param  \App\Models\Expense  $expense
      * @return \Illuminate\Http\Response
      */
-    public function edit(Expense  $expense)
+    public function edit(Expense $expense)
     {
         return view('expense.edit_expense', compact('expense'));
     }

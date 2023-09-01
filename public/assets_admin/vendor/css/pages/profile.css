@@ -66,3 +66,43 @@ img{
 .btn-save {
     margin-top: 10px;
 }
+
+/* Style the container for inputs */
+.container {
+background-color: #f1f1f1;
+padding: 10px;
+}
+
+/* The message box is shown when the user clicks on the password field */
+#message {
+display:none;
+background: #f1f1f1;
+color: #000;
+position: relative;
+padding: 20px;
+margin-top: 10px;
+}
+
+#message p {
+font-size: 12px;
+}
+
+/* Add a green text color and a checkmark when the requirements are right */
+.valid {
+color: green;
+}
+
+.valid:before {
+position: relative;
+left: -35px;
+}
+
+/* Add a red text color and an "x" icon when the requirements are wrong */
+.invalid {
+color: red;
+}
+
+.invalid:before {
+position: relative;
+left: -35px;
+}
